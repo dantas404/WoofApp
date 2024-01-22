@@ -12,11 +12,14 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.Alignment
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -50,15 +53,21 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun AppLayout(){
-    LazyColumn{
-        items(dogs){
-            DogCard(
-                dog = it,
-                modifier = Modifier.padding(dimensionResource(R.dimen.padding_small))
-            )
+    Scaffold(
+        topBar = {
+            //WoofAppTopBar()
+        }
+    ) { it ->
+        LazyColumn(contentPadding = it) {
+            items(dogs) {
+                DogCard(
+                    dog = it,
+                    modifier = Modifier.padding(dimensionResource(R.dimen.padding_small))
+                )
+            }
         }
     }
-}
+    }
 
 @Composable
 fun DogCard(dog: Dog, modifier:Modifier = Modifier){
@@ -107,6 +116,31 @@ fun DogInfo(
             style = MaterialTheme.typography.bodyLarge
         )
     }
+}
+
+@Composable
+fun WoofAppTopBar(modifier: Modifier = Modifier){
+    CenterAlignedTopAppBar(
+        title = {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(
+                        modifier = modifier
+                            .size(dimensionResource(R.dimen.image_size))
+                            .padding(dimensionResource(R.dimen.padding_small)),
+                        painter = painterResource(R.drawable.ic_woof_logo),
+                        contentDescription = null
+                    )
+                    Text(
+                        text = "Woof",
+                        style = MaterialTheme.typography.displayLarge
+                    )
+                }
+        },
+        modifier = modifier
+
+    )
 }
 
 @Preview
